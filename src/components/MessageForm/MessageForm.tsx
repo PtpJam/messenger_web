@@ -26,6 +26,7 @@ export const MessageForm = ({
                     value="send"
                     className="mb-2 rounded-md bg-violet-500 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
                 ></input>
+                <input type='file' name='fileInput' />
             </form>
         </div>
     );

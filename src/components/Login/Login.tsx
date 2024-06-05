@@ -15,7 +15,14 @@ export const Login = ({ onLogin }: TLoginProps) => {
                     type="text"
                     id="login"
                     name="login"
-                    placeholder="Name"
+                    placeholder="Nickname"
+                    className="mx-2 h-12 rounded-md border border-slate-400 bg-gray-800 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                ></input>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
                     className="mx-2 h-12 rounded-md border border-slate-400 bg-gray-800 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
                 ></input>
                 <button
