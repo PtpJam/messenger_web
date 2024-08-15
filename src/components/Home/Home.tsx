@@ -17,14 +17,14 @@ export const Home = () => {
             );
             return;
         }
-        axios
-            .get('http://localhost:5000/user/my-rooms', {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then(res => {
-                console.log('Loaded Chats => ', res.data.chats);
-                setChats(res.data.chats);
-            });
+        // axios
+        //     .get('http://localhost:5001/user/my-rooms', {
+        //         headers: { Authorization: `Bearer ${token}` },
+        //     })
+        //     .then(res => {
+        //         console.log('Loaded Chats => ', res.data.chats);
+        //         setChats(res.data.chats);
+        //     });
     }, []);
 
     return (

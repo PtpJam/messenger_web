@@ -29,15 +29,15 @@ export const Messages = () => {
 
     useEffect(() => {
         // load messages
-        axios
-            .get(`http://localhost:5000/chat/load-messages/${chatUid}`)
-            .then(res => setMesages(res.data))
-            .catch(err => setError(err.response.data.message));
+        // axios
+        //     .get(`http://localhost:5001/chat/load-messages/${chatUid}`)
+        //     .then(res => setMesages(res.data))
+        //     .catch(err => setError(err.response.data.message));
 
-        // load chat info
-        axios
-            .get(`http://localhost:5000/chat/${chatUid}`)
-            .then(res => setChat(res.data));
+        // // load chat info
+        // axios
+        //     .get(`http://localhost:5001/chat/${chatUid}`)
+        //     .then(res => setChat(res.data));
 
         if (user.uuid && chatUid) {
             socket.emit('join-room', { userUid: user.uuid, roomUid: chatUid });
@@ -50,35 +50,20 @@ export const Messages = () => {
     }, []);
 
     const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-        const messageText = new FormData(e.currentTarget).get(
-            'minput',
-        ) as string;
-
-        const file = new FormData(e.currentTarget).get('fileInput') as File;
-
-        console.log('Text => ', messageText);
-        console.log('file => ', file);
-
-        if (messageText && user.uuid && chatUid) {
-            socket.emit('message', {
-                message: messageText,
-                toRoomUid: chatUid,
-                fromUid: user.uuid,
-            });
+        if (!chat?.uuid || !user.uuid) {
+            console.log('Chat uid or user uid is null!');
+            return;
         }
 
-        if (file && user.uuid && chatUid) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const fileBuffer = new Uint8Array(reader.result as ArrayBuffer);
-                const buffer = new Uint8Array(fileBuffer);
-                socket.emit('file', {
-                    fileName: file.name,
-                    fileBuffer,
-                });
-            };
-            reader.readAsArrayBuffer(selectedFile);
-        }
+        const message = new FormData(e.currentTarget).get('minput') as string;
+        const file = new FormData(e.currentTarget).get('fileinput') as File;
+
+        // axios.post('http://localhost:5001/chat/message', {
+        //     file,
+        //     message,
+        //     fromUid: user.uuid,
+        //     toRoomUid: chat.uuid,
+        // })
     };
 
     return error ? (

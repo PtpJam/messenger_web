@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-// import socket from './util/connection/connection';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from './components/Login';
-import socket from './util/connection/connection';
 import { Message, User } from './util/connection/interface/chat.interface';
 import { Home } from './components/Home';
 import { Header } from './components/Header';
@@ -48,33 +46,36 @@ function App() {
     // }, []);
 
     useEffect(() => {
-        const token = sessionStorage.getItem(sessionStorageTokenKey);
-        const currentUser = sessionStorage.getItem(sessionStorageUserKey);
-        if (token && currentUser) {
-            setUser(JSON.parse(currentUser));
-            setIsAuthed(true);
-            navigate('/home');
-        } else {
-            setIsAuthed(false);
-            navigate('/login');
-        }
+        axios.post('http://localhost:5001/auth/register', { test: "test" })
+        .catch(err => console.log(err));
+        // const token = sessionStorage.getItem(sessionStorageTokenKey);
+        // const currentUser = sessionStorage.getItem(sessionStorageUserKey);
+        // if (token && currentUser) {
+        //     setUser(JSON.parse(currentUser));
+        //     setIsAuthed(true);
+        //     navigate('/home');
+        // } else {
+        //     setIsAuthed(false);
+        //     navigate('/login');
+        // }
 
-        socket.on('connect', () => {
-            setIsConnected(true);
-        });
+        // socket.on('connect', () => {
+        //     console.log('[INFO] Connected!')
+        //     setIsConnected(true);
+        // });
 
-        socket.on('disconnect', () => {
-            setIsConnected(false);
-        });
+        // socket.on('disconnect', () => {
+        //     setIsConnected(false);
+        // });
 
-        return () => {
-            socket.off('connect_error');
-            socket.off('disconnect');
-            socket.off('connect');
-            socket.off('message');
-            socket.off('joined');
-            socket.off('chat');
-        };
+        // return () => {
+        //     socket.off('connect_error');
+        //     socket.off('disconnect');
+        //     socket.off('connect');
+        //     socket.off('message');
+        //     socket.off('joined');
+        //     socket.off('chat');
+        // };
     }, []);
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
@@ -85,7 +86,7 @@ function App() {
         };
 
         axios
-            .post('http://localhost:5000/auth/login', payload, {
+            .post('http://localhost:5001/auth/login', payload, {
                 withCredentials: true,
             })
             .then(res => {
